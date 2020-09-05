@@ -15,11 +15,11 @@ const port = process.env.PORT || 9000;
 
 // middlewares
 app.use(express.json());
-app.use(function (req, res, next) {
-  res.setHeaders("Access-Control-Allow-Origin", "*"),
-    res.setHeaders("Access-Control-Allow-Headers", "*"),
-    next();
-});
+// app.use(function (req, res, next) {
+//   res.setHeaders("Access-Control-Allow-Origin", "*"),
+//     res.setHeaders("Access-Control-Allow-Headers", "*"),
+//     next();
+// });
 
 // DB config
 const connection_url =
