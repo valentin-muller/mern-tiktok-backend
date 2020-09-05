@@ -15,37 +15,53 @@ const port = 9000;
 
 // middlewares
 app.use(express.json());
+app.use(function (req, res, next) {
+  res.setHeaders("Access-Control-Allow-Origin", "*"),
+    res.setHeaders("Access-Control-Allow-Headers", "*"),
+    next();
+});
 
 // DB config
-const connection_url = "mongodb+srv://admin:grJX4VVj9ob75ejE@cluster0.y3fap.mongodb.net/tiktok?retryWrites=true&w=majority";
+const connection_url =
+  "mongodb+srv://admin:grJX4VVj9ob75ejE@cluster0.y3fap.mongodb.net/tiktok?retryWrites=true&w=majority";
 
 mongoose.connect(connection_url, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
-})
+});
 
 // API end point
 app.get("/", function (req, res) {
   res.status(200).send("Hello World");
 });
 
-app.get('/v1/posts', function(req, res) {
-    res.status(200).send(data);
-    console.log(data);
+app.get("/v1/posts", function (req, res) {
+  res.status(200).send(data);
+  console.log(data);
 });
 
-app.post('/v2/posts', function(req, res) {
-    const dbVideos = req.body
+app.get("/v2/posts", function (req, res) {
+  videos.find(function (err, data) {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).send(data);
+    }
+  });
+});
 
-    videos.create(dbVideos, function(err, data) {
-      if (err) {
-        res.status(500).send(err)
-      } else {
-        res.status(201).send(data)
-      }
-    })
-})
+app.post("/v2/posts", function (req, res) {
+  const dbVideos = req.body;
+
+  videos.create(dbVideos, function (err, data) {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(201).send(data);
+    }
+  });
+});
 
 // Listen
 // app.listen(port, () => console.log(`listening on localhost: ${port}`));
