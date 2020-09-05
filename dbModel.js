@@ -1,7 +1,7 @@
 var mongoose = require("mongoose");
 
 
-const tiktokSchema = mongoose.Schema({
+const tiktokSchema = new mongoose.Schema({
     url: String,
     channel: String,
     song: String,
